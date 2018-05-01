@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="center" size="0.156 0.104" />
+    <ImageTarget name="LeadersDB" size="0.192 0.256" />
+  </Tracking>
+</QCARConfig>
