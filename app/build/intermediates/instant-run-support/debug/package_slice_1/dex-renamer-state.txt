@@ -1,4 +1,4 @@
-#Fri Apr 27 11:25:01 CST 2018
-base.0=D\:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+#Tue May 01 17:38:59 CST 2018
+base.0=D\:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\20
 path.0=classes.dex
 renamed.0=classes.dex

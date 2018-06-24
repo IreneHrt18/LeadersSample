@@ -10,5 +10,6 @@
     
     <color name="overlay_bottom_bar_separators">#333333</color>
     <color name="overlay_bottom_bar_background">#1E1E1E</color>
-    
+    <color name="title">#3399ff</color>
+    <color name="button">#e7e7e7</color>
 </resources>

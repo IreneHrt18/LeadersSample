@@ -9,9 +9,6 @@ countries.
 
 package com.vuforia.samples.VuforiaSamples.app.ImageTargets;
 
-import java.util.ArrayList;
-import java.util.Vector;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -37,8 +34,8 @@ import com.vuforia.CameraDevice;
 import com.vuforia.DataSet;
 import com.vuforia.HINT;
 import com.vuforia.ObjectTracker;
-import com.vuforia.State;
 import com.vuforia.STORAGE_TYPE;
+import com.vuforia.State;
 import com.vuforia.Trackable;
 import com.vuforia.Tracker;
 import com.vuforia.TrackerManager;
@@ -46,25 +43,30 @@ import com.vuforia.Vuforia;
 import com.vuforia.samples.SampleApplication.SampleApplicationControl;
 import com.vuforia.samples.SampleApplication.SampleApplicationException;
 import com.vuforia.samples.SampleApplication.SampleApplicationSession;
-import com.vuforia.samples.SampleApplication.utils.LoadingDialogHandler;
 import com.vuforia.samples.SampleApplication.utils.SampleApplicationGLView;
+import com.vuforia.samples.SampleApplication.utils.LoadingDialogHandler;
 import com.vuforia.samples.SampleApplication.utils.Texture;
 import com.vuforia.samples.VuforiaSamples.R;
 import com.vuforia.samples.VuforiaSamples.ui.SampleAppMenu.SampleAppMenu;
 import com.vuforia.samples.VuforiaSamples.ui.SampleAppMenu.SampleAppMenuGroup;
 import com.vuforia.samples.VuforiaSamples.ui.SampleAppMenu.SampleAppMenuInterface;
+import com.vuforia.samples.SampleApplication.SampleApplicationControl;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class ImageTargets extends Activity implements SampleApplicationControl,
-    SampleAppMenuInterface
+        SampleAppMenuInterface,DatasetInitializer
 {
     private static final String LOGTAG = "ImageTargets";
+
+    SampleApplicationSession AppSession;
     
-    SampleApplicationSession vuforiaAppSession;
-    
-    private DataSet mCurrentDataset;
-    private int mCurrentDatasetSelectionIndex = 0;
-    private int mStartDatasetsIndex = 0;
+    //private DataSet mCurrentDataset;
+    private DataSet mStartDataset;
+    private DataSet mEndDataset;
+
     private int mDatasetsNumber = 0;
     private ArrayList<String> mDatasetStrings = new ArrayList<String>();
     
@@ -79,7 +81,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
     // The textures we will use for rendering:
     private Vector<Texture> mTextures;
     
-    private boolean mSwitchDatasetAsap = false;
+    //private boolean mSwitchDatasetAsap = false;
     private boolean mFlash = false;
     private boolean mContAutofocus = true;
     private boolean mExtendedTracking = false;
@@ -104,18 +106,18 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
+
         Log.d(LOGTAG, "onCreate");
         super.onCreate(savedInstanceState);
         
-        vuforiaAppSession = new SampleApplicationSession(this);
-
-
-        startLoadingAnimation();
-        mDatasetStrings.add("StonesAndChips.xml");
-        mDatasetStrings.add("LeadersDB.xml");
-        mDatasetStrings.add("Tarmac.xml");
+        AppSession = new SampleApplicationSession(this);
         
-        vuforiaAppSession
+        startLoadingAnimation();
+        mDatasetStrings.add("LeadersDB.xml");
+        mDatasetStrings.add("LeadersDB2.xml");
+        
+        AppSession
             .initAR(this, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         
         mGestureDetector = new GestureDetector(this, new GestureListener());
@@ -124,7 +126,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         mTextures = new Vector<Texture>();
         loadTextures();
         
-        mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith(
+        mIsDroidDevice = Build.MODEL.toLowerCase().startsWith(
             "droid");
         
     }
@@ -173,7 +175,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         }
     }
     
-
+    
     // We want to load specific textures from the APK, which we will later use
     // for rendering.
     
@@ -206,7 +208,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        vuforiaAppSession.onResume();
+        AppSession.onResume();
     }
     
     
@@ -217,7 +219,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         Log.d(LOGTAG, "onConfigurationChanged");
         super.onConfigurationChanged(config);
         
-        vuforiaAppSession.onConfigurationChanged();
+        AppSession.onConfigurationChanged();
     }
     
     
@@ -243,7 +245,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         
         try
         {
-            vuforiaAppSession.pauseAR();
+            AppSession.pauseAR();
         } catch (SampleApplicationException e)
         {
             Log.e(LOGTAG, e.getString());
@@ -260,7 +262,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         
         try
         {
-            vuforiaAppSession.stopAR();
+            AppSession.stopAR();
         } catch (SampleApplicationException e)
         {
             Log.e(LOGTAG, e.getString());
@@ -277,6 +279,8 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
     // Initializes AR application components.
     private void initApplicationAR()
     {
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 3);
+
         // Create OpenGL ES view:
         int depthSize = 16;
         int stencilSize = 0;
@@ -285,10 +289,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         mGlView = new SampleApplicationGLView(this);
         mGlView.init(translucent, depthSize, stencilSize);
 
-        //mutiple image reco
-        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 2);
-
-        mRenderer = new ImageTargetRenderer(this, vuforiaAppSession);
+        mRenderer = new ImageTargetRenderer(this, AppSession);
         mRenderer.setTextures(mTextures);
         mGlView.setRenderer(mRenderer);
     }
@@ -326,39 +327,51 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
             .getTracker(ObjectTracker.getClassType());
         if (objectTracker == null)
             return false;
-        
-        if (mCurrentDataset == null)
-            mCurrentDataset = objectTracker.createDataSet();
-        
-        if (mCurrentDataset == null)
+
+        if(!doInitDataset(objectTracker,mStartDataset,"LeadersDB.xml"))
             return false;
-        
-        if (!mCurrentDataset.load(
-            mDatasetStrings.get(mCurrentDatasetSelectionIndex),
-            STORAGE_TYPE.STORAGE_APPRESOURCE))
+        if(!doInitDataset(objectTracker,mEndDataset,"LeadersDB2.xml"))
             return false;
-        
-        if (!objectTracker.activateDataSet(mCurrentDataset))
+
+        return true;
+    }
+
+    //init the start floor'dataset and the end floor'dataset and leave alone the others
+    @Override
+    public boolean doInitDataset(ObjectTracker mObjTracker, DataSet mDataset, String mDatasetString){
+        if (mDataset == null)
+            mDataset = mObjTracker.createDataSet();
+        if (mDataset == null) {
+            Log.d("DBload", "doLoadTrackersData: failed to create Dataset");
             return false;
-        
-        int numTrackables = mCurrentDataset.getNumTrackables();
-        for (int count = 0; count < numTrackables; count++)
-        {
-            Trackable trackable = mCurrentDataset.getTrackable(count);
-            if(isExtendedTrackingActive())
-            {
+        }
+
+        if (!mDataset.load(mDatasetString,
+                STORAGE_TYPE.STORAGE_APPRESOURCE)){
+            Log.d("DBload", "doLoadTrackersData: failed to load Dataset");
+            return false;}
+
+        if (!mObjTracker.activateDataSet(mDataset)){
+            Log.d("DBload", "doLoadTrackersData: failed to active Dataset");
+            return false;
+        }
+        int numTrackables = mDataset.getNumTrackables();
+
+        for (int count = 0; count < numTrackables; count+=2) {
+            Trackable trackable = mDataset.getTrackable(count);
+            if (isExtendedTrackingActive()) {
                 trackable.startExtendedTracking();
             }
-            
+
             String name = "Current Dataset : " + trackable.getName();
             trackable.setUserData(name);
             Log.d(LOGTAG, "UserData:Set the following user data "
-                + (String) trackable.getUserData());
+                    + ( String ) trackable.getUserData());
         }
-        
+
         return true;
+
     }
-    
     
     @Override
     public boolean doUnloadTrackersData()
@@ -371,21 +384,25 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
             .getTracker(ObjectTracker.getClassType());
         if (objectTracker == null)
             return false;
-        
-        if (mCurrentDataset != null && mCurrentDataset.isActive())
-        {
-            if (objectTracker.getActiveDataSet(0).equals(mCurrentDataset)
-                && !objectTracker.deactivateDataSet(mCurrentDataset))
-            {
-                result = false;
-            } else if (!objectTracker.destroyDataSet(mCurrentDataset))
-            {
+            if (mStartDataset != null && mStartDataset.isActive()) {
+                if (objectTracker.getActiveDataSet(0).equals(mStartDataset)
+                        && !objectTracker.deactivateDataSet(mStartDataset)) {
+                } else if (!objectTracker.destroyDataSet(mStartDataset)) {
+                    result = false;
+                }
+
+                mStartDataset = null;
+            }
+        if (mEndDataset != null && mEndDataset.isActive()) {
+            if (objectTracker.getActiveDataSet(0).equals(mEndDataset)
+                    && !objectTracker.deactivateDataSet(mEndDataset)) {
+            } else if (!objectTracker.destroyDataSet(mEndDataset)) {
                 result = false;
             }
-            
-            mCurrentDataset = null;
+
+            mEndDataset = null;
         }
-        
+
         return result;
     }
 
@@ -474,7 +491,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
             // Sets the layout background to transparent
             mUILayout.setBackgroundColor(Color.TRANSPARENT);
             
-            vuforiaAppSession.startAR(CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_DEFAULT);
+            AppSession.startAR(CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_DEFAULT);
             
             mSampleAppMenu = new SampleAppMenu(this, this, "Image Targets",
                 mGlView, mUILayout, null);
@@ -524,17 +541,17 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
         });
     }
     
-    
+
     @Override
     public void onVuforiaUpdate(State state)
     {
-        if (mSwitchDatasetAsap)
+        /*if (mSwitchDatasetAsap)
         {
             mSwitchDatasetAsap = false;
             TrackerManager tm = TrackerManager.getInstance();
             ObjectTracker ot = (ObjectTracker) tm.getTracker(ObjectTracker
                 .getClassType());
-            if (ot == null || mCurrentDataset == null
+            if (ot == null || mStartDataset == null|| mEndDataset == null
                 || ot.getActiveDataSet(0) == null)
             {
                 Log.d(LOGTAG, "Failed to swap datasets");
@@ -543,7 +560,7 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
             
             doUnloadTrackersData();
             doLoadTrackersData();
-        }
+        }*/
     }
     
     
@@ -678,15 +695,14 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
                 CMD_CAMERA_REAR, true);
         }
         
-        group = mSampleAppMenu
-            .addGroup(getString(R.string.menu_datasets), true);
-        mStartDatasetsIndex = CMD_DATASET_START_INDEX;
+       /* group = mSampleAppMenu
+            .addGroup(getString(R.string.menu_datasets), true);*/
+       // mStartDatasetsIndex = CMD_DATASET_START_INDEX;
         mDatasetsNumber = mDatasetStrings.size();
         
-        group.addRadioItem("Stones & Chips", mStartDatasetsIndex, true);
-        group.addRadioItem("LeadersDB", mStartDatasetsIndex+1, false);
-        group.addRadioItem("Tarmac", mStartDatasetsIndex + 2, false);
-        
+        //group.addRadioItem("Stones & Chips", mStartDatasetsIndex, true);
+        //group.addRadioItem("LeadersDB", mStartDatasetsIndex, true);
+        //group.addRadioItem("Tarmac", mStartDatasetsIndex + 1, false);
         mSampleAppMenu.attachMenu();
     }
 
@@ -775,60 +791,15 @@ public class ImageTargets extends Activity implements SampleApplicationControl,
                     setMenuToggle(mFlashOptionView, false);
                 }
                 
-                vuforiaAppSession.stopCamera();
+                AppSession.stopCamera();
 
-                vuforiaAppSession
+                AppSession
                     .startAR(command == CMD_CAMERA_FRONT ? CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_FRONT
                         : CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_BACK);
 
                 break;
-            
-            case CMD_EXTENDED_TRACKING:
-                for (int tIdx = 0; tIdx < mCurrentDataset.getNumTrackables(); tIdx++)
-                {
-                    Trackable trackable = mCurrentDataset.getTrackable(tIdx);
-                    
-                    if (!mExtendedTracking)
-                    {
-                        if (!trackable.startExtendedTracking())
-                        {
-                            Log.e(LOGTAG,
-                                "Failed to start extended tracking target");
-                            result = false;
-                        } else
-                        {
-                            Log.d(LOGTAG,
-                                "Successfully started extended tracking target");
-                        }
-                    } else
-                    {
-                        if (!trackable.stopExtendedTracking())
-                        {
-                            Log.e(LOGTAG,
-                                "Failed to stop extended tracking target");
-                            result = false;
-                        } else
-                        {
-                            Log.d(LOGTAG,
-                                "Successfully started extended tracking target");
-                        }
-                    }
-                }
-                
-                if (result)
-                    mExtendedTracking = !mExtendedTracking;
-                
-                break;
-            
-            default:
-                if (command >= mStartDatasetsIndex
-                    && command < mStartDatasetsIndex + mDatasetsNumber)
-                {
-                    mSwitchDatasetAsap = true;
-                    mCurrentDatasetSelectionIndex = command
-                        - mStartDatasetsIndex;
-                }
-                break;
+
+
         }
         
         return result;

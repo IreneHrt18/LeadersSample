@@ -81,7 +81,7 @@ public class AboutScreen extends Activity implements OnClickListener
             Log.e(LOGTAG, "About html loading failed");
         }
         
-        mAboutWebText.loadData(aboutText, "text/html", "UTF-8");
+        mAboutWebText.loadData(aboutText, "text/html", "GBK");
         
         mStartButton = (Button) findViewById(R.id.button_start);
         mStartButton.setOnClickListener(this);

@@ -1,12 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
-INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-181:12
+ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:2:1-132:12
 	package
 		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:3:5-49
 		INJECTED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml
@@ -60,7 +60,7 @@ ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\
 	android:name
 		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:50:22-77
 application
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:62:5-179:19
+ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:62:5-130:19
 	android:label
 		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:64:9-41
 	android:launchMode
@@ -121,73 +121,9 @@ ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\
 		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:118:13-51
 	android:name
 		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:116:13-58
-activity#com.vuforia.samples.VuforiaSamples.app.VuMark.VuMark
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:123:9-129:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:127:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:125:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:126:13-51
+activity#com.vuforia.samples.VuforiaSamples.ui.ActivityList.MainActivity
+ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:124:9-128:20
+	android:label
+		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:126:13-45
 	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:124:13-46
-activity#com.vuforia.samples.VuforiaSamples.app.CylinderTargets.CylinderTargets
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:131:9-137:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:135:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:133:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:134:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:132:13-64
-activity#com.vuforia.samples.VuforiaSamples.app.VirtualButtons.VirtualButtons
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:139:9-145:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:143:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:141:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:142:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:140:13-62
-activity#com.vuforia.samples.VuforiaSamples.app.UserDefinedTargets.UserDefinedTargets
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:147:9-153:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:151:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:149:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:150:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:148:13-70
-activity#com.vuforia.samples.VuforiaSamples.app.MultiTargets.MultiTargets
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:155:9-161:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:159:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:157:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:158:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:156:13-58
-activity#com.vuforia.samples.VuforiaSamples.app.CloudRecognition.CloudReco
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:163:9-169:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:167:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:165:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:166:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:164:13-59
-activity#com.vuforia.samples.VuforiaSamples.app.ObjectRecognition.ObjectTargets
-ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:171:9-177:20
-	android:launchMode
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:175:13-44
-	android:configChanges
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:173:13-93
-	android:theme
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:174:13-51
-	android:name
-		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:172:13-64
+		ADDED from D:\software\vuforia-sdk-android-7-1-34\samples\vusample\app\src\main\AndroidManifest.xml:125:13-91
