@@ -1,28 +1,6 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vuforia-samples-core-android-7-1-34\\VuforiaSamples-7-1-34\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mdpi-v4\\values-mdpi-v4.xml",
-            "map": [
-                {
-                    "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vuforia-samples-core-android-7-1-34\\VuforiaSamples-7-1-34\\app\\src\\main\\res\\values-mdpi\\dimens.xml",
-                    "from": {
-                        "startLines": "3,4",
-                        "startColumns": "4,4",
-                        "startOffsets": "56,105",
-                        "endColumns": "48,49",
-                        "endOffsets": "100,150"
-                    },
-                    "to": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,104",
-                        "endColumns": "48,49",
-                        "endOffsets": "99,149"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mdpi-v4\\values-mdpi-v4.xml",
             "map": [
                 {

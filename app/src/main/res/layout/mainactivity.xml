@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#ff3e4e88">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Leaders"
+            android:textColor="#ffeeeeee"
+            android:textSize="40dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="城市："
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="地图："
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout3">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#ffc4e3cb"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#ffc4e3cb"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/linearLayout3"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:id="@+id/linearLayout4">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="    起始ID:" />
+
+        <AutoCompleteTextView
+            style="@android:style/Widget.AutoCompleteTextView"
+            android:id="@+id/auto1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/linearLayout4"
+        android:orientation="horizontal"
+        android:layout_marginTop="80dp"
+        android:id="@+id/linearLayout5">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="    目的地:" />
+
+        <AutoCompleteTextView
+            style="@android:style/Widget.AutoCompleteTextView"
+            android:id="@+id/auto2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_weight="1"
+        android:text="开始导航" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:gravity="center"
+        android:text="向右滑设置城市及地图"
+        android:textSize="20dp" />
+
+</RelativeLayout>

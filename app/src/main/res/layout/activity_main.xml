@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    tools:context="com.vuforia.samples.VuforiaSamples.ui.ActivityList.MainActivity" >
+    tools:context="com.Leaders.cugb.AR.ui.ActivityList.MainActivity" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
