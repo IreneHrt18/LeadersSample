@@ -2,13 +2,16 @@ package com.Leaders.cugb.Application.dijkstra;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
 
-
+/**
+ *读取地图路网信息及POI信息
+ */
 public class readtxt {
 
 	int ve[]=new int[]{19,545,484,566,642,502,296};
@@ -31,7 +34,7 @@ public class readtxt {
 			"my\\F5name.txt",
 			"my\\F6name.txt"
 	};
-	public void readlc(int l, int ll,Graph_DG g) throws IOException {
+	public void readlc(int l,int ll,Graph_DG g) throws IOException {
 		go(l,0,g);
 		readlt(l, g);
 		readname(l, g);
@@ -56,12 +59,17 @@ public class readtxt {
 		}
 	}
 
+	/**
+	 * 执行读取操作到graph中
+	 * @param l
+	 * @param vel
+	 * @param g
+	 * @throws IOException
+	 */
 	public void go(int l,int vel,Graph_DG g) throws IOException {
 		ArrayList<String> list=new ArrayList<String>();
-		FileInputStream fil=new FileInputStream(lcname[l]);
-		InputStreamReader fil1=new InputStreamReader(fil);
-		BufferedReader file=new BufferedReader(fil1);
-
+		BufferedReader file=new BufferedReader(new InputStreamReader(new FileInputStream(lcname[l])));
+	    
 		String values=file.readLine();
 		    while(values!=null)
 		    {
@@ -88,10 +96,16 @@ public class readtxt {
 		    g.points[id2].lc=l;
 		    g.arc[id1-1][id2-1]=dis;
 			g.arc[id2-1][id1-1]=dis;
-		    
-//		    System.out.println(id1+" "+x1+" "+y1+" "+dis);
+
 		}
 	}
+
+	/**
+	 * 读取文件
+	 * @param lc 楼层
+	 * @param g 图
+	 * @throws IOException
+	 */
 	public void readlt(int lc,Graph_DG g) throws IOException {
 		ArrayList<String> list=new ArrayList<String>();
 		FileInputStream fil=new FileInputStream("my\\0.txt");
@@ -129,9 +143,15 @@ public class readtxt {
 			}		
 			g.arc[id1-1][minid-1]=Math.sqrt(min);
 			g.arc[minid-1][id1-1]=Math.sqrt(min);
-//		    System.out.println(id1+" "+x1+" "+y1+" "+value[3]);
 		}
 	}
+
+	/**
+	 * 读取文件
+	 * @param lc 楼层
+	 * @param g 图
+	 * @throws IOException
+	 */
 	public void readname(int lc,Graph_DG g) throws IOException {
 		ArrayList<String> list=new ArrayList<String>();
 		FileInputStream fil=new FileInputStream(Fname[lc]);
@@ -165,7 +185,6 @@ public class readtxt {
 				}
 			}		
 			g.points[minid].name=name;
-//		    System.out.println(minid+" "+x1+" "+y1+" "+name);
 		}
 	}
 	

@@ -9,6 +9,9 @@ countries.
 
 package com.Leaders.cugb.Application;
 
+/**
+ * AR异常示例代码
+ */
 // Used to send back to the activity any error during vuforia processes
 public class ApplicationException extends Exception
 {

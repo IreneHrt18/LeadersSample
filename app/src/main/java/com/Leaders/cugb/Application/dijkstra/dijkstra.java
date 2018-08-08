@@ -1,7 +1,12 @@
 package com.Leaders.cugb.Application.dijkstra;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
+
+/**
+ *计算路径结果集中相邻两个点之间的距离，并返回结果
+ */
 
 class Dis {
     String path= "";
@@ -9,58 +14,59 @@ class Dis {
     boolean visit= false;
 }
 
+/**
+ *创建用于路径规划的图
+ */
 class Graph_DG {
-    int vexnum;   //ͼ�Ķ������
-    int edge;     //ͼ�ı���1
+    int vexnum;   //图的顶点个数
+    int edge;     //图的边数1
     dijkstra dij;
-    double arc[][];   //�ڽӾ���
-    public Dis [] dis;   //��¼�����������·������Ϣ
+    double arc[][];   //邻接矩阵
+    public Dis [] dis;   //记录各个顶点最短路径的信息
     public point points[]=new point[2005];
     double INT_MAX=1e18;
     public Graph_DG(int vexnum, int edge,dijkstra dij) {
-    	  //��ʼ���������ͱ���
+    	  //初始化顶点数和边数
         this.vexnum = vexnum;
         this.edge = edge;
         this.dij=dij;
-        //Ϊ�ڽӾ��󿪱ٿռ�͸���ֵ
+        //为邻接矩阵开辟空间和赋初值
         arc = new double[this.vexnum][this.vexnum];
         dis = new Dis[this.vexnum];
         for (int i = 0; i < this.vexnum; i++) {
         	dis[i]=new Dis();//amazing???
             arc[i] = new double[this.vexnum];
             for (int k = 0; k < this.vexnum; k++) {
-                //�ڽӾ����ʼ��Ϊ�����
+                //邻接矩阵初始化为无穷大
                     arc[i][k] = 1e18;
             }
         }
     }
-    //����ͼ
+    //创建图
     void createGraph(int l,int ll) throws IOException {
     	readtxt read=new readtxt();
     	read.readlc(l,ll,this);
 
-//		point item=points[1];
-//	    System.out.println(item.id+" "+item.x+" "+item.y+" ");
     }
-    //�����·��
+    //求最短路径
     void Dijkstra(int begin) {
-    	//���ȳ�ʼ�����ǵ�dis����
+    	//首先初始化我们的dis数组
         int i;
-        //�������ĵ�����·��Ϊ0
+        //设置起点的到起点的路径为0
         dis[begin - 1].value = 0;
         dis[begin - 1].visit = true;
         for (i = 0; i < this.vexnum; i++) {
-            //���õ�ǰ��·��
+            //设置当前的路径
             dis[i].path += 'v'+Integer.toString(begin)+'v'+Integer.toString(i+1); 
 
             dis[i].value = arc[begin - 1][i];
         }
 
         int count = 1;
-        //����ʣ��Ķ�������·����ʣ��this.vexnum-1�����㣩
+        //计算剩余的顶点的最短路径（剩余this.vexnum-1个顶点）
         while (count != this.vexnum) {
-            //temp���ڱ��浱ǰdis��������С���Ǹ��±�
-            //min��¼�ĵ�ǰ����Сֵ
+            //temp用于保存当前dis数组中最小的那个下标
+            //min记录的当前的最小值
             int temp=0;
             double min = INT_MAX;
             for (i = 0; i < this.vexnum; i++) {
@@ -69,14 +75,14 @@ class Graph_DG {
                     temp = i;
                 }
             }
-            //cout << temp + 1 << "  "<<min << endl;
-            //��temp��Ӧ�Ķ�����뵽�Ѿ��ҵ������·���ļ�����
+
+            //把temp对应的顶点加入到已经找到的最短路径的集合中
             dis[temp].visit = true;
             ++count;
             for (i = 0; i < this.vexnum; i++) {
-                //ע�����������arc[temp][i]!=INT_MAX����ӣ���Ȼ�����������Ӷ���ɳ����쳣
+                //注意这里的条件arc[temp][i]!=INT_MAX必须加，不然会出现溢出，从而造成程序异常
                 if (!dis[i].visit && arc[temp][i]!=INT_MAX && (dis[temp].value + arc[temp][i]) < dis[i].value) {
-                    //����µõ��ı߿���Ӱ������Ϊ���ʵĶ��㣬�Ǿ;͸����������·���ͳ���
+                    //如果新得到的边可以影响其他为访问的顶点，那就就更新它的最短路径和长度
                     dis[i].value = dis[temp].value + arc[temp][i];
     		
                     dis[i].path = dis[temp].path + 'v'+ Integer.toString(i+1);
@@ -84,10 +90,14 @@ class Graph_DG {
             }
         }
     }
-    //��ӡ���·��
+
+	/**
+	 * 打印最短路径
+	 * @param end
+	 * @param v
+	 */
     void get_path(int end,int v) {
 
-//    	System.out.println(dis[end-1].path);//
     	String pa="";
     	int patt[]=new int[2005];
     	int p=-1;
@@ -102,7 +112,7 @@ class Graph_DG {
     			}
     		}
     		patt[++p]=Integer.parseInt(pa);
-    		pa="";
+
     	for(int i=0;i<p;i++){
     		double a=points[patt[i+1]].x -points[patt[i]].x;
     		double b=points[patt[i+1]].y -points[patt[i]].y;
@@ -116,27 +126,48 @@ class Graph_DG {
     		else 
     			points[patt[i]].id=patt[i];	
     		
-    		dij.myPoints.add(points[patt[i]]);
-//		    System.out.println(points[patt[i]].id+" "+points[patt[i]].x+" "+points[patt[i]].y+" �Ƕ�"+points[patt[i]].angle+" ����"+c);   		
-    	}
+    		dij.myPoints.add(points[patt[i]]);	}
     	if(points[patt[p]].lc==dij.ll)
 			points[patt[p]].id=patt[p]-(dij.ve[0]+dij.ve[dij.l]);
 		else if(points[patt[p]].lc==dij.l)
     		points[patt[p]].id=patt[p]-(dij.ve[0]);
 		else 
 			points[patt[p]].id=patt[p];
-    	dij.myPoints.add(points[patt[p]]);
-//    	System.out.println(points[patt[p]].id+" "+points[patt[p]].x+" "+points[patt[p]].y);
-    }
+    	dij.myPoints.add(points[patt[p]]);}
     boolean _check() {
     	if(dis[1].value<dis[2].value)return true;
     	else return false;
     }
-};
+}
+
+/**
+ * 路径规划模块
+ */
 public class dijkstra {
+	/**
+	 * 示例地图数组
+	 */
 	int ve[]=new int[]{19,545,484,566,797,619,354};
 	int ed[]=new int[]{38,648,624,726,797,619,354};
-	public int l,ll,s,t;
+	/**
+	 * 起点楼层
+	 */
+	public int l;
+	/**
+	 * 终点楼层
+	 */
+	public int ll;
+	/**
+	 * 起点编号
+	 */
+	public int s;
+	/**
+	 * 终点编号
+	 */
+	public int t;
+	/**
+	*路径点数据集合
+	 */
 	public ArrayList<point> myPoints=new ArrayList<point>();
 	public void setST(int l,int s,int ll,int t) {
 		this.l=l;
@@ -144,12 +175,19 @@ public class dijkstra {
 		this.s=s;
 		this.t=t;
 	}
+
+	/**
+	 * 获取路径点数据
+	 * @return
+	 */
 	public ArrayList<point> getMyPoints() {
-		for(int i=0;i<myPoints.size();i++){
-			myPoints.get(i).ID=Integer.toString(myPoints.get(i).id+myPoints.get(i).lc*1000);
-		}
 		return myPoints;
 	}
+
+	/**
+	 * 执行路径分析
+	 * @throws IOException
+	 */
 	public void go() throws IOException {
 		int v,e;
 		s+=ve[0];t+=ve[0];	

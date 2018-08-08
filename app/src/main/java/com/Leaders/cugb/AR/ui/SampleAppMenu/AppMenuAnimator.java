@@ -11,8 +11,13 @@ package com.Leaders.cugb.AR.ui.SampleAppMenu;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
+import android.os.Build;
 
-
+/**
+*菜单动效示例代码
+ */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AppMenuAnimator extends ValueAnimator implements
     ValueAnimator.AnimatorUpdateListener, ValueAnimator.AnimatorListener
 {

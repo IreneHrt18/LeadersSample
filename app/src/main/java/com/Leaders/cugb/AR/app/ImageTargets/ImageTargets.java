@@ -11,6 +11,7 @@ package com.Leaders.cugb.AR.app.ImageTargets;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -19,15 +20,22 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
+import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Leaders.cugb.AR.ui.SampleAppMenu.AppMenu;
@@ -51,39 +59,79 @@ import com.Leaders.cugb.AR.R;
 import com.Leaders.cugb.AR.ui.SampleAppMenu.AppMenuGroup;
 import com.Leaders.cugb.AR.ui.SampleAppMenu.AppMenuInterface;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Vector;
 
-
+/**
+ * 在此类中执行AR任务的Activity
+ */
 public class ImageTargets extends Activity implements ApplicationControl,
         AppMenuInterface,DatasetInitializer
 {
     private static final String LOGTAG = "ImageTargets";
-
+    /**
+     * AR任务对象
+     */
     ApplicationSession AppSession;
-    
+
+    private int mDatasetsNumber=0;
     //private DataSet mCurrentDataset;
+    /**
+     * 起点终点所在数据集
+     */
     private DataSet mStartDataset;
     private DataSet mEndDataset;
 
-    private int mDatasetsNumber = 0;
+    /**
+     * 存放数据集名称的集合
+     */
     private ArrayList<String> mDatasetStrings = new ArrayList<String>();
     
-    // Our OpenGL view:
+
+    /**
+     * OpenGL视图
+     */
     private SampleApplicationGLView mGlView;
-    
-    // Our renderer:
+
+    /**
+     * 返回信息视图
+     */
+    private TextView messageView;
+
+    /**
+     * AR 界面布局
+     */
+    private RelativeLayout mainLayout;
+
+    /**
+     * 响应信息模块
+     */
+    public static MessageHandler messageHandler;
+
+    /**
+     * 渲染模块
+     */
     private ImageTargetRenderer mRenderer;
     
     private GestureDetector mGestureDetector;
-    
-    // The textures we will use for rendering:
+
+    /**
+     * 模型纹理材质集合
+     */
     private Vector<Texture> mTextures;
     
     //private boolean mSwitchDatasetAsap = false;
     private boolean mFlash = false;
     private boolean mContAutofocus = true;
+    /**
+     * 拓展跟踪（保留）
+     */
     private boolean mExtendedTracking = false;
+
 
     private View mFocusOptionView;
     private View mFlashOptionView;
@@ -94,7 +142,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
 
     LoadingDialogHandler loadingDialogHandler = new LoadingDialogHandler(this);
     
-    // Alert Dialog used to display SDK errors
+
     private AlertDialog mErrorDialog;
     
     boolean mIsDroidDevice = false;
@@ -102,6 +150,11 @@ public class ImageTargets extends Activity implements ApplicationControl,
     
     // Called when the activity first starts or the user navigates back to an
     // activity.
+
+    /**
+     * 初始化AR识别任务
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -109,7 +162,9 @@ public class ImageTargets extends Activity implements ApplicationControl,
 
         Log.d(LOGTAG, "onCreate");
         super.onCreate(savedInstanceState);
-        
+
+        messageHandler=new MessageHandler();
+
         AppSession = new ApplicationSession(this);
         
         startLoadingAnimation();
@@ -129,7 +184,41 @@ public class ImageTargets extends Activity implements ApplicationControl,
             "droid");
         
     }
-    
+
+    private void initUI(){
+        //不能用findViewbyId，因为不是在此activity的父窗体中找的
+        //messageView= (TextView ) findViewById(R.id.message);
+
+        mainLayout=new RelativeLayout(this);
+
+        RelativeLayout.LayoutParams messageViewParams= new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,300);
+
+        LayoutParams glViewParams= new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+
+        RelativeLayout.LayoutParams mainLayoutParam=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+
+        messageViewParams.addRule(RelativeLayout.ALIGN_TOP);
+
+        messageView =new TextView(this);
+
+            messageView.setText("This is textview!");
+            messageView.setBackgroundColor(Color.TRANSPARENT);
+            messageView.setTextSize(30);
+            messageView.setTextColor(Color.BLACK);
+            messageView.setGravity(Gravity.CENTER);
+            messageView.setLayoutParams(messageViewParams);
+
+        mainLayout.setLayoutParams(mainLayoutParam);
+
+        mainLayout.addView(mGlView,glViewParams);
+
+        //将messageView放在摄像机前
+        mainLayout.addView(messageView);
+
+        this.setContentView(mainLayout);
+
+    }
+
     // Process Single Tap event to trigger autofocus
     private class GestureListener extends
         GestureDetector.SimpleOnGestureListener
@@ -153,8 +242,8 @@ public class ImageTargets extends Activity implements ApplicationControl,
             if (!result)
                 Log.e("SingleTapUp", "Unable to trigger focus");
 
-            // Generates a Handler to trigger continuous auto-focus
-            // after 1 second
+            // 生成一个处理程序来触发连续的自动焦点
+            // 1秒后
             autofocusHandler.postDelayed(new Runnable()
             {
                 public void run()
@@ -174,10 +263,10 @@ public class ImageTargets extends Activity implements ApplicationControl,
         }
     }
     
-    
-    // We want to load specific textures from the APK, which we will later use
-    // for rendering.
-    
+
+    /**
+     * 加载模型纹理材质
+     */
     private void loadTextures()
     {
         mTextures.add(Texture.loadTextureFromApk("TextureTeapotBrass.png",
@@ -189,9 +278,11 @@ public class ImageTargets extends Activity implements ApplicationControl,
         mTextures.add(Texture.loadTextureFromApk("ImageTargets/Buildings.jpeg",
             getAssets()));
     }
-    
-    
-    // Called when the activity will start interacting with the user.
+
+
+    /**
+     * 当活动开始与用户交互时调用
+     */
     @Override
     protected void onResume()
     {
@@ -200,7 +291,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
 
         showProgressIndicator(true);
         
-        // This is needed for some Droid devices to force portrait
+        // 这对于一些Droid设备来说是必需的
         if (mIsDroidDevice)
         {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -209,9 +300,12 @@ public class ImageTargets extends Activity implements ApplicationControl,
 
         AppSession.onResume();
     }
-    
-    
-    // Callback for configuration changes the activity handles itself
+
+
+    /**
+     * 用于配置的回调将更改活动本身
+     * @param config
+     */
     @Override
     public void onConfigurationChanged(Configuration config)
     {
@@ -220,9 +314,9 @@ public class ImageTargets extends Activity implements ApplicationControl,
         
         AppSession.onConfigurationChanged();
     }
-    
-    
-    // Called when the system is about to start resuming a previous activity.
+
+
+
     @Override
     protected void onPause()
     {
@@ -235,10 +329,10 @@ public class ImageTargets extends Activity implements ApplicationControl,
             mGlView.onPause();
         }
         
-        // Turn off the flash
+        // 关闭手电筒
         if (mFlashOptionView != null && mFlash)
         {
-            // OnCheckedChangeListener is called upon changing the checked state
+            // OnCheckedChangeListener在更改已检查的状态时调用
             setMenuToggle(mFlashOptionView, false);
         }
         
@@ -251,8 +345,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
         }
     }
     
-    
-    // The final call you receive before your activity is destroyed.
+
     @Override
     protected void onDestroy()
     {
@@ -267,20 +360,22 @@ public class ImageTargets extends Activity implements ApplicationControl,
             Log.e(LOGTAG, e.getString());
         }
         
-        // Unload texture:
+        // 卸载
         mTextures.clear();
         mTextures = null;
         
         System.gc();
     }
-    
-    
-    // Initializes AR application components.
+
+
+    /**
+     * 初始化应用程序组件。
+     */
     private void initApplicationAR()
     {
         Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 3);
 
-        // Create OpenGL ES view:
+        // 初始化 OpenGL ES 视图
         int depthSize = 16;
         int stencilSize = 0;
         boolean translucent = Vuforia.requiresAlpha();
@@ -302,15 +397,15 @@ public class ImageTargets extends Activity implements ApplicationControl,
         mUILayout.setVisibility(View.VISIBLE);
         mUILayout.setBackgroundColor(Color.BLACK);
         
-        // Gets a reference to the loading dialog
+        // 获取加载对话框的引用
         loadingDialogHandler.mLoadingDialogContainer = mUILayout
             .findViewById(R.id.loading_indicator);
         
-        // Shows the loading indicator at start
+
         loadingDialogHandler
             .sendEmptyMessage(LoadingDialogHandler.SHOW_LOADING_DIALOG);
         
-        // Adds the inflated layout to the view
+
         addContentView(mUILayout, new LayoutParams(LayoutParams.MATCH_PARENT,
             LayoutParams.MATCH_PARENT));
         
@@ -327,6 +422,13 @@ public class ImageTargets extends Activity implements ApplicationControl,
         if (objectTracker == null)
             return false;
 
+
+        copy("LeadersDB.xml");
+       copy("LeadersDB2.xml");
+
+        copy("LeadersDB.dat");
+        copy("LeadersDB2.dat");
+
         if(!doInitDataset(objectTracker,mStartDataset,"LeadersDB.xml"))
             return false;
         if(!doInitDataset(objectTracker,mEndDataset,"LeadersDB2.xml"))
@@ -335,7 +437,9 @@ public class ImageTargets extends Activity implements ApplicationControl,
         return true;
     }
 
-    //init the start floor'dataset and the end floor'dataset and leave alone the others
+    /**
+     *初始化开始层的“数据集”和结束层的“数据集”
+     */
     @Override
     public boolean doInitDataset(ObjectTracker mObjTracker, DataSet mDataset, String mDatasetString){
         if (mDataset == null)
@@ -345,8 +449,14 @@ public class ImageTargets extends Activity implements ApplicationControl,
             return false;
         }
 
-        if (!mDataset.load(mDatasetString,
+
+        //copy(mDatasetString);
+        /*if (!mDataset.load(mDatasetString,
                 STORAGE_TYPE.STORAGE_APPRESOURCE)){
+            Log.d("DBload", "doLoadTrackersData: failed to load Dataset");
+            return false;}*/
+        if (!mDataset.load("storage/sdcard0/"+mDatasetString,
+                STORAGE_TYPE.STORAGE_ABSOLUTE)){
             Log.d("DBload", "doLoadTrackersData: failed to load Dataset");
             return false;}
 
@@ -354,8 +464,10 @@ public class ImageTargets extends Activity implements ApplicationControl,
             Log.d("DBload", "doLoadTrackersData: failed to active Dataset");
             return false;
         }
+        //numbers of imagetargets
         int numTrackables = mDataset.getNumTrackables();
 
+        //start extend tracking and set user's data
         for (int count = 0; count < numTrackables; count+=2) {
             Trackable trackable = mDataset.getTrackable(count);
             if (isExtendedTrackingActive()) {
@@ -371,11 +483,55 @@ public class ImageTargets extends Activity implements ApplicationControl,
         return true;
 
     }
-    
+
+    public void copy(String fileName){
+        try {
+            String xml=null;
+            InputStream inputStream = getAssets().open(fileName);
+            String dir= "storage/sdcard0/";//Environment.getExternalStorageDirectory().toString();
+            FileOutputStream openFileOutput = new FileOutputStream(dir+fileName);
+            // openFileOutput = openFileOutput("LeadersDB.xml", Context.MODE_PRIVATE);
+            byte[] bytes = new byte[1024];
+            int length;
+            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+            while ((length=inputStream.read(bytes)) != -1) {
+                openFileOutput.write(bytes, 0, length);
+
+            }
+//            arrayOutputStream.close();
+//            xml = new String(arrayOutputStream.toByteArray());
+//
+//            openFileOutput.write(xml.getBytes());
+            openFileOutput.flush();
+            inputStream.close();
+            openFileOutput.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public boolean doLoadDataset(ObjectTracker mObjTracker, DataSet mDataset, String mDatasetString) {
+        return false;
+    }
+
+    @Override
+    public boolean doUnLoadDataset(ObjectTracker mObjTracker, DataSet mDataset) {
+        return false;
+    }
+
+    @Override
+    public boolean doCheckDataset(ObjectTracker mObjTracker, DataSet mDataset) {
+        return false;
+    }
+
+    /**
+     *指示跟踪器是否正确卸载。
+     * @return
+     */
     @Override
     public boolean doUnloadTrackersData()
     {
-        // Indicate if the trackers were unloaded correctly
         boolean result = true;
         
         TrackerManager tManager = TrackerManager.getInstance();
@@ -422,21 +578,21 @@ public class ImageTargets extends Activity implements ApplicationControl,
 
         if (mContAutofocus)
         {
-            // Set camera focus mode
+            // 设置相机的焦点模式
             if(!CameraDevice.getInstance().setFocusMode(CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO))
             {
-                // If continuous autofocus mode fails, attempt to set to a different mode
+                // 如果连续自动对焦模式失败，尝试设置为不同的模式
                 if(!CameraDevice.getInstance().setFocusMode(CameraDevice.FOCUS_MODE.FOCUS_MODE_TRIGGERAUTO))
                 {
                     CameraDevice.getInstance().setFocusMode(CameraDevice.FOCUS_MODE.FOCUS_MODE_NORMAL);
                 }
 
-                // Update Toggle state
+                // 更新切换状态
                 setMenuToggle(mFocusOptionView, false);
             }
             else
             {
-                // Update Toggle state
+                // 更新切换状态
                 setMenuToggle(mFocusOptionView, true);
             }
         }
@@ -476,23 +632,21 @@ public class ImageTargets extends Activity implements ApplicationControl,
             initApplicationAR();
             
             mRenderer.setActive(true);
-            
-            // Now add the GL surface view. It is important
-            // that the OpenGL ES surface view gets added
-            // BEFORE the camera is started and video
-            // background is configured.
-            addContentView(mGlView, new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-            
-            // Sets the UILayout to be drawn in front of the camera
+
+            /**
+             * 现在添加GL surface视图。
+              */
+            initUI();
+//
+            // 设置要在摄像机前绘制的UILayout
             mUILayout.bringToFront();
             
-            // Sets the layout background to transparent
+            // 将布局背景设置为透明
             mUILayout.setBackgroundColor(Color.TRANSPARENT);
             
             AppSession.startAR(CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_DEFAULT);
             
-            mAppMenu = new AppMenu(this, this, "Image Targets",
+            mAppMenu = new AppMenu(this, this, "摄像机选项",
                 mGlView, mUILayout, null);
             setSampleAppMenuSettings();
             
@@ -510,11 +664,15 @@ public class ImageTargets extends Activity implements ApplicationControl,
         final String errorMessage = message;
         runOnUiThread(new Runnable()
         {
+
+
             public void run()
             {
+
                 if (mErrorDialog != null)
                 {
                     mErrorDialog.dismiss();
+
                 }
                 
                 // Generates an Alert Dialog to show the error message
@@ -566,13 +724,13 @@ public class ImageTargets extends Activity implements ApplicationControl,
     @Override
     public boolean doInitTrackers()
     {
-        // Indicate if the trackers were initialized correctly
+        // 指示跟踪器是否初始化正确
         boolean result = true;
         
         TrackerManager tManager = TrackerManager.getInstance();
         Tracker tracker;
         
-        // Trying to initialize the image tracker
+        // 初始化图像跟踪器。
         tracker = tManager.initTracker(ObjectTracker.getClassType());
         if (tracker == null)
         {
@@ -591,7 +749,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
     @Override
     public boolean doStartTrackers()
     {
-        // Indicate if the trackers were started correctly
+        // 指示追踪器是否启动正确
         boolean result = true;
         
         Tracker objectTracker = TrackerManager.getInstance().getTracker(
@@ -663,7 +821,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
         
         group = mAppMenu.addGroup("", false);
         group.addTextItem(getString(R.string.menu_back), -1);
-        
+
         group = mAppMenu.addGroup("", true);
         group.addSelectionItem(getString(R.string.menu_extended_tracking),
             CMD_EXTENDED_TRACKING, false);
@@ -802,6 +960,19 @@ public class ImageTargets extends Activity implements ApplicationControl,
         }
         
         return result;
+    }
+
+    class MessageHandler extends Handler{
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle=msg.getData();
+            String i=bundle.getString("name");
+            ImageTargets.this.messageView.setText(i);
+
+        }
     }
     
     

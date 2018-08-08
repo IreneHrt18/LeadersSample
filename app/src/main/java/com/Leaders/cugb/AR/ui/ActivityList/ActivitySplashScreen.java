@@ -21,7 +21,9 @@ import android.widget.RelativeLayout;
 
 import com.Leaders.cugb.AR.R;
 
-
+/**
+ *开始界面
+ */
 public class ActivitySplashScreen extends Activity
 {
     
@@ -53,7 +55,7 @@ public class ActivitySplashScreen extends Activity
             {
 
                 Intent intent = new Intent(ActivitySplashScreen.this,
-                        MainActivity.class);
+                        Main_activity.class);
                 startActivity(intent);
                 
             }

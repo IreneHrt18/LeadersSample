@@ -12,7 +12,11 @@ package com.Leaders.cugb.AR.app.ImageTargets;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.Leaders.cugb.Application.AppRenderer;
 import com.Leaders.cugb.Application.ApplicationSession;
@@ -38,16 +42,30 @@ import java.util.Vector;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-
+/**
+ * 为摄像机画面进行图形渲染
+ */
 // The renderer class for the ImageTargets sample. 
 public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererControl
 {
     private static final String LOGTAG = "ImageTargetRenderer";
-    
+
+    /**
+     * AR任务对象
+     */
     private ApplicationSession vuforiaAppSession;
+    /**
+     * 当前Activity
+     */
     private ImageTargets mActivity;
+    /**
+     * 图像处理模块
+     */
     private AppRenderer mAppRenderer;
 
+    /**
+     * 模型材质纹理数据集
+     */
     private Vector<Texture> mTextures;
 
 
@@ -56,13 +74,28 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
     private int textureCoordHandle;
     private int mvpMatrixHandle;
     private int texSampler2DHandle;
-    
+
+    /**
+     * 茶壶模型对象
+     */
     private Teapot mTeapot;
-    
+
+    /**
+     * 拓展跟踪模型尺寸
+     */
     private float kBuildingScale = 0.012f;
+    /**
+     * 3D模型对象
+     */
     private SampleApplication3DModel mBuildingsModel;
 
+    /**活跃状态
+     *
+     */
     private boolean mIsActive = false;
+    /**
+     * 模型对象状态
+     */
     private boolean mModelIsLoaded = false;
 
     //adjust the scale of model
@@ -70,7 +103,7 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
     //and the distance should be at most 10*(image'size) witch is none business of the OBJECT_SCALE_FLOAT
 
     //and the smaller picture size is, the distance is father and the model is seemed to be larger
-    private static final float OBJECT_SCALE_FLOAT = 0.03f;
+    private static final float OBJECT_SCALE_FLOAT = 0.01f;
 
     private ArrayList< MyTrackable> mTrackables;
     
@@ -84,6 +117,11 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
         mTrackables=new ArrayList<MyTrackable>();
         setMyTrackable(MyTrackable.defalteResult());
     }
+
+    /**
+     * 初始化模型控制器
+     * @param arrayList 模型控制数据集
+     */
     public void setMyTrackable(ArrayList arrayList){
         mTrackables=arrayList;
 
@@ -99,8 +137,12 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
         // Call our function to render content from AppRenderer class
         mAppRenderer.render();
     }
-    
 
+
+    /**
+     * 开启渲染模块
+     * @param active
+     */
     public void setActive(boolean active)
     {
         mIsActive = active;
@@ -110,7 +152,11 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
     }
 
 
-    // Called when the surface is created or recreated.
+    /**
+     * 当表面被创建或重新创建时调用。
+     * @param gl
+     * @param config
+     */
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
@@ -122,9 +168,14 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
 
         mAppRenderer.onSurfaceCreated();
     }
-    
-    
-    // Called when the surface changed size.
+
+    /**
+     *当表面改变尺寸时调用。
+     * @param gl
+     * @param width
+     * @param height
+     */
+
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         Log.d(LOGTAG, "GLRenderer.onSurfaceChanged");
@@ -137,8 +188,11 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
 
         initRendering();
     }
-    
-    
+
+
+    /**
+     * OpenGL初始化
+     */
     // Function for initializing the renderer.
     private void initRendering()
     {
@@ -190,6 +244,9 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
 
     }
 
+    /**
+     * 更新渲染模块状态
+     */
     public void updateConfiguration()
     {
         mAppRenderer.onConfigurationChanged(mIsActive);
@@ -198,6 +255,31 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
     // The render function called from SampleAppRendering by using RenderingPrimitives views.
     // The state is owned by AppRenderer which is controlling it's lifecycle.
     // State should not be cached outside this method.
+
+    /**
+     * 向主线程UI发送信息
+     */
+    private void sendMessage(String messageText){
+
+        Message message;
+
+        Bundle bundle = new Bundle();
+
+        message = ImageTargets.messageHandler.obtainMessage();
+
+        bundle.putString("name", messageText+"");
+
+        message.setData(bundle);
+
+        ImageTargets.messageHandler.sendMessage(message);
+
+    }
+
+    /**
+     * 执行图形渲染操作
+     * @param state vuForia API
+     * @param projectionMatrix
+     */
     public void renderFrame(State state, float[] projectionMatrix)
     {
         // Renders video background replacing Renderer.DrawVideoBackground()
@@ -215,27 +297,31 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
             //Do not keep a copy of the pointer!
             TrackableResult result = state.getTrackableResult(tIdx);
             Trackable trackable = result.getTrackable();
-            printUserData(trackable);
-            Log.d("tIdx:", "renderFrame: "+tIdx);
+            //printUserData(trackable);
 
-            //不识别center对象
-//            for (int i = 0; i < mTrackables.size(); i++) {
-//                if (!trackable.getName().equalsIgnoreCase(mTrackables.get(i).getName()))
-//                    continue;
-//                else {
-            {{
+            for (int i = 0; i < mTrackables.size(); i++) {
+                if (!trackable.getName().equalsIgnoreCase(mTrackables.get(i).getName()))
+                    continue;
+                else {
+            {
+
+                sendMessage(trackable.getName().toString());
+
+
+                int textureIndex = 0;
                     if(trackable.getName().equalsIgnoreCase(mTrackables.get(mTrackables.size()-1).getName())){
 
                           //  Toast.makeText(mActivity., "This is the end of the trip", Toast.LENGTH_LONG).show();
 
-                        Log.d("END", "end of the trip ");
+                        textureIndex=1;
+                        //new ToastSignal().toastSignals(ToastSignal.END,"");
                     }
 
                     Matrix44F modelViewMatrix_Vuforia = Tool
                             .convertPose2GLMatrix(result.getPose());
                     float[] modelViewMatrix = modelViewMatrix_Vuforia.getData();
 
-                    int textureIndex = 0;
+
            /* textureIndex= trackable.getName().equalsIgnoreCase("stones") ? 0
                     : 1;
             textureIndex = trackable.getName().equalsIgnoreCase("LeadersDB") ? 1
@@ -251,9 +337,9 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
                                 OBJECT_SCALE_FLOAT);
                         Matrix.scaleM(modelViewMatrix, 0, OBJECT_SCALE_FLOAT,
                                 OBJECT_SCALE_FLOAT, OBJECT_SCALE_FLOAT);
-                        //可以帮助茶壶进行旋转，a为角度
-                        //Matrix.rotateM(modelViewMatrix, 0, 90.0f, 0, 0, 1.0f);
-                       // Matrix.rotateM(modelViewMatrix, 0, mTrackables.get(i).getOrientation()+90.0f, 0, 0, 1.0f);
+                        //help teapot to rotate ,a is angle
+                        Matrix.rotateM(modelViewMatrix, 0, 90.0f, 0, 0, 1.0f);
+                        Matrix.rotateM(modelViewMatrix, 0, mTrackables.get(i).getOrientation()+90.0f, 0, 0, 1.0f);
                     } else {
                         Matrix.rotateM(modelViewMatrix, 0, 90.0f, 1.0f, 0, 0);
                         Matrix.scaleM(modelViewMatrix, 0, kBuildingScale,
@@ -320,14 +406,22 @@ public class ImageTargetRenderer implements GLSurfaceView.Renderer, AppRendererC
         GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 
     }
+    }
 
+    /**
+     * 打印跟踪对象信息
+     * @param trackable 跟踪对象
+     */
     private void printUserData(Trackable trackable)
     {
         String userData = (String) trackable.getUserData();
         Log.d(LOGTAG, "UserData:Retreived User Data	\"" + userData + "\"");
     }
-    
-    
+
+    /**
+     * 设置模型材质纹理
+     * @param textures
+     */
     public void setTextures(Vector<Texture> textures)
     {
         mTextures = textures;
