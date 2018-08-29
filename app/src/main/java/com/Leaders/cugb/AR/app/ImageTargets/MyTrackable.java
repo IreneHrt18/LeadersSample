@@ -1,7 +1,6 @@
 package com.Leaders.cugb.AR.app.ImageTargets;
 
-import com.Leaders.cugb.Application.dijkstra.dijkstra;
-import com.Leaders.cugb.Application.dijkstra.point;
+import com.Leaders.cugb.Application.dijkstra.Dijkstra;
 
 import java.util.ArrayList;
 

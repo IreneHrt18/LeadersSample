@@ -2,7 +2,7 @@ package com.Leaders.cugb.AR.app.ImageTargets;
 
 import android.util.Log;
 
-import com.Leaders.cugb.Application.dijkstra.dijkstra;
+import com.Leaders.cugb.Application.dijkstra.Dijkstra;
 
 /**
  * 数据集管理类
@@ -14,9 +14,9 @@ public class DatasetManager {
     private String mStartDatasetString;
     private String mEndDatasetString;
     private String LOGTAG = "MyDatasetExcption:";
-    private dijkstra mDijkstra;
+    private Dijkstra mDijkstra;
 
-    public DatasetManager(dijkstra _dijkstra){
+    public DatasetManager(Dijkstra _dijkstra){
         mDijkstra=_dijkstra;
 
     }
@@ -25,7 +25,7 @@ public class DatasetManager {
      */
     public boolean setStartDatasetString() {
         //trans the start floor to string
-        String startDatasetString=DATASET_TITLE+Integer.toString(mDijkstra.l);
+        String startDatasetString=DATASET_TITLE+Integer.toString(mDijkstra.layer1);
         try {
             mStartDatasetString = startDatasetString;
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class DatasetManager {
      */
     public boolean setEndDatasetString() {
         //trans the end floor to string
-        String endDatasetString=DATASET_TITLE+Integer.toString(mDijkstra.ll);
+        String endDatasetString=DATASET_TITLE+Integer.toString(mDijkstra.layer2);
         try {
             mEndDatasetString = endDatasetString;
         } catch (Exception e) {

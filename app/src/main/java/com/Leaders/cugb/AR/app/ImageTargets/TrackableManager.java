@@ -1,8 +1,10 @@
 package com.Leaders.cugb.AR.app.ImageTargets;
 
-import com.Leaders.cugb.Application.dijkstra.dijkstra;
-import com.Leaders.cugb.Application.dijkstra.point;
+import com.Leaders.cugb.Application.dijkstra.Dij_Main;
+import com.Leaders.cugb.Application.dijkstra.Dijkstra;
+import com.Leaders.cugb.Application.dijkstra.Point;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,23 +23,23 @@ public class TrackableManager {
     /**
      * 路径分析结果数目
      */
-    private static int trackableNumber;
+    public static int trackableNumber=0;
 
-    /**
-     * 路径分析器
-     */
-    public static dijkstra mDijkstra;
     /**
      * 获取路径分析结果
      * @return
      */
-    public void  analyseDijkstra(dijkstra _dijkstra){
+    public void  analyseDijkstra(Dij_Main dij_main,String startID,String destination) throws IOException {
 
         ArrayList<MyTrackable> resultList=new ArrayList<MyTrackable>();
 
-        for (point _point:_dijkstra.getMyPoints()
-                ) {
-            MyTrackable trackable=new MyTrackable(_point.name,(float)_point.angle,_point.dis);
+        ArrayList<Point> pointArrayList=dij_main.getMyList(startID,destination);
+
+
+        for (int i=0;i<pointArrayList.size();i++)
+        {
+            Point _point=pointArrayList.get(i);
+            MyTrackable trackable=new MyTrackable(_point.ID,(float)_point.angle,_point.dis);
             resultList.add(trackable);
         }
 

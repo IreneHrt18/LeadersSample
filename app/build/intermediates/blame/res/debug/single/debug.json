@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_food.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\food.png"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_close_button_background.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\close_button_background.xml"
     },
@@ -8,16 +12,36 @@
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\card_info.png"
     },
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_book.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\book.png"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_home.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\home.png"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\anim_bottom_up.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\anim\\bottom_up.xml"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_haircut.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\haircut.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_01.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_01.png"
     },
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_load_activity.xml.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\load_activity.xml"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_camera_overlay.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\camera_overlay.xml"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_hand.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\hand.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_camera_overlay_reticle.xml.flat",
@@ -108,28 +132,32 @@
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\mainactivity.xml"
     },
     {
-        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_plus_pressed.png.flat",
-        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_plus_pressed.png"
-    },
-    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_plus_pressed.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_plus_pressed.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_round_bg.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\round_bg.xml"
     },
     {
-        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
-        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\activity_main.xml"
-    },
-    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_slidingmenumain.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\SlidingMenu-master\\library\\build\\intermediates\\bundles\\debug\\res\\layout\\slidingmenumain.xml"
     },
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_main_activity.xml.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\main_activity.xml"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_03.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_03.png"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_settings.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\settings.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_scanline.png.flat",
@@ -144,6 +172,10 @@
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\bg70.png"
     },
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_logo2.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\logo2.png"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_icon.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-ldpi\\icon.png"
     },
@@ -156,12 +188,28 @@
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_camera_normal.png"
     },
     {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_shape.xml.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\shape.xml"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_cloth.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\cloth.png"
+    },
+    {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_plus_normal.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_plus_normal.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_card.xml.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\layout\\card.xml"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_shop.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\shop.png"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ktv.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\ktv.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\layout_sample_app_menu_layer.xml.flat",
@@ -190,6 +238,10 @@
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_02.png.flat",
         "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable\\icon_02.png"
+    },
+    {
+        "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_movie.png.flat",
+        "source": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\src\\main\\res\\drawable-xxhdpi\\movie.png"
     },
     {
         "merged": "D:\\software\\vuforia-sdk-android-7-1-34\\samples\\vusample\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon.png.flat",

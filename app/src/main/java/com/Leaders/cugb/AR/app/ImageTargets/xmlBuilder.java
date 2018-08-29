@@ -1,13 +1,10 @@
 package com.Leaders.cugb.AR.app.ImageTargets;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Environment;
 import android.widget.TextView;
 
-import com.Leaders.cugb.AR.R;
-import com.Leaders.cugb.Application.dijkstra.dijkstra;
-import com.Leaders.cugb.Application.dijkstra.point;
+import com.Leaders.cugb.Application.dijkstra.Dijkstra;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -18,7 +15,6 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -41,7 +37,7 @@ public class xmlBuilder {
 
 
     private Context mContext;
-    private dijkstra mDijkstra;
+    private Dijkstra mDijkstra;
     private Document resultDocument;
     private TextView textView;
     private static final String XMLNS_XSI = "xmlns:xsi";
@@ -71,12 +67,12 @@ public class xmlBuilder {
         }
     }
 
-    public void  initList(){
+    public void  initList() throws IOException {
 
         idStrings=new ArrayList<String>();
         int i=0;
 
-        for (com.Leaders.cugb.Application.dijkstra.point mPoint:mDijkstra.getMyPoints()
+        for (com.Leaders.cugb.Application.dijkstra.Point mPoint:mDijkstra.getMyPoints()
              ) {
             idStrings.add(mPoint.name);
         }

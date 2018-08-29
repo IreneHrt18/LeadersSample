@@ -22,6 +22,7 @@
             <enum name="fullscreen" value="1"/>
             <enum name="none" value="2"/>
         </attr><attr format="reference" name="shadowDrawable"/><attr format="dimension" name="shadowWidth"/><attr format="boolean" name="fadeEnabled"/><attr format="float" name="fadeDegree"/><attr format="boolean" name="selectorEnabled"/><attr format="reference" name="selectorDrawable"/></declare-styleable>
+    <dimen name="height">60dp</dimen>
     <dimen name="menu_activities_list_padding_left">24dp</dimen>
     <dimen name="menu_activities_list_padding_top_down">14dp</dimen>
     <dimen name="menu_entries_sides_padding">10dp</dimen>
@@ -71,6 +72,8 @@
     <string name="button_OK">OK</string>
     <string name="button_start">Start</string>
     <string name="content_desc_camera_button">Camera Button</string>
+    <string name="loadingText">等待路径规划结果...</string>
+    <string name="loading_text">等待路径规划结果......</string>
     <string name="menu_back">Vuforia Samples</string>
     <string name="menu_button_blue">Blue</string>
     <string name="menu_button_green">Green</string>

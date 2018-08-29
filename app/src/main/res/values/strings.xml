@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="loading_text">等待路径规划结果......</string>
 
     <string name="app_name">Leaders</string>
     <string name="app_description">Leaders Navigation</string>
@@ -67,5 +68,6 @@
     <string name="menu_button_green">Green</string>
         
     <string name="splash_screen_description">Vuforia Splash</string>
-    
+    <string name="loadingText">等待路径规划结果...</string>
+
 </resources>

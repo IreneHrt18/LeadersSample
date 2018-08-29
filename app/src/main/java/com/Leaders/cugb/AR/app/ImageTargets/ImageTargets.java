@@ -468,7 +468,7 @@ public class ImageTargets extends Activity implements ApplicationControl,
         int numTrackables = mDataset.getNumTrackables();
 
         //start extend tracking and set user's data
-        for (int count = 0; count < numTrackables; count+=2) {
+        for (int count = 0; count < numTrackables; count++) {
             Trackable trackable = mDataset.getTrackable(count);
             if (isExtendedTrackingActive()) {
                 trackable.startExtendedTracking();
