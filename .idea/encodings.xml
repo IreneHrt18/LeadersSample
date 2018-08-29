@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/0.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/00.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F1id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F1name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F2id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F2name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F3id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F3id.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F3name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F4id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F4name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F5id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F5name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F6id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/F6name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f10id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f10name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f11id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f11name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f9id-name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/f9name.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/Leaders/cugb/AR/app/ImageTargets/ImageTargetRenderer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/Leaders/cugb/Application/dijkstra/dijkstra.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/Leaders/cugb/Application/dijkstra/point.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/Leaders/cugb/Application/dijkstra/readtxt.java" charset="UTF-8" />
+  </component>
+</project>

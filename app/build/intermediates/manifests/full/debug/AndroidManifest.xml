@@ -91,7 +91,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.Leaders.cugb.AR.ui.ActivityList.ActivityLauncher"
+            android:name="com.Leaders.cugb.AR.ui.ActivityList.LoadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
             android:screenOrientation="portrait" >
         </activity>
@@ -102,7 +102,7 @@
             android:theme="@style/SampleAppsTheme" >
         </activity>
         <activity
-            android:name="com.Leaders.cugb.AR.ui.ActivityList.MainActivity"
+            android:name="com.Leaders.cugb.AR.ui.ActivityList.Main_activity"
             android:label="@string/app_name" >
         </activity>
     </application>

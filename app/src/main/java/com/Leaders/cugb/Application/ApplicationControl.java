@@ -15,47 +15,69 @@ import com.vuforia.State;
 //  Interface to be implemented by the activity which uses ApplicationSession
 public interface ApplicationControl
 {
-    
-    // To be called to initialize the trackers
+
+    /**
+     * 调用以初始化跟踪器
+     * @return
+     */
     boolean doInitTrackers();
-    
-    
-    // To be called to load the trackers' data
+
+
+    /**
+     * 被调用来加载跟踪器的数据
+     * @return
+     */
     boolean doLoadTrackersData();
-    
-    
-    // To be called to start tracking with the initialized trackers and their
-    // loaded data
+
+
+    /**
+     * 调用初始化跟踪器和它们的跟踪器开始跟踪
+     * @return
+     */
     boolean doStartTrackers();
-    
-    
-    // To be called to stop the trackers
+
+
+    /**
+     * 停止追踪
+     * @return
+     */
     boolean doStopTrackers();
-    
-    
-    // To be called to destroy the trackers' data
+
+
+    /**
+     * 销毁追踪数据
+     * @return
+     */
     boolean doUnloadTrackersData();
     
     
-    // To be called to deinitialize the trackers
+
     boolean doDeinitTrackers();
-    
-    
-    // This callback is called after the Vuforia initialization is complete,
-    // the trackers are initialized, their data loaded and
-    // tracking is ready to start
+
+
+    /**
+     * 这个回调在Vuforia初始化完成之后调用，跟踪器已初始化，它们的数据已加载，追踪准备完毕
+     * @param e
+     */
     void onInitARDone(ApplicationException e);
-    
-    
-    // This callback is called every cycle
+
+
+    /**
+     * 这个回调每个周期都被调用
+     * @param state
+     */
     void onVuforiaUpdate(State state);
 
 
-    // This callback is called on Vuforia resume
+    /**
+     * 这个回调在Vuforia中被调用
+     */
     void onVuforiaResumed();
 
 
-    // This callback is called once Vuforia has been started
+    /**
+     * 这个回调在Vuforia启动后被调用
+     */
     void onVuforiaStarted();
     
 }

@@ -11,6 +11,7 @@ package com.Leaders.cugb.AR.ui.SampleAppMenu;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
@@ -30,8 +31,10 @@ import android.widget.TextView;
 
 import  com.Leaders.cugb.AR.R;
 
+/**
+ * 摄像机活动时可设置相机选项的右滑菜单栏类
+ */
 
-// Handles the sample apps menu settings
 public class AppMenu
 {
     
@@ -50,13 +53,11 @@ public class AppMenu
     private float mInitialAdditionalViewsX[];
     private int mScreenWidth;
     private int mListViewWidth = 0;
-    
-    // True if dragging and displaying the menu
+
+// True if dragging and displaying the menu
     boolean mSwipingMenu = false;
-    
     // True if menu is showing and docked
     boolean mStartMenuDisplaying = false;
-    
     float mGingerbreadMenuClipping = 0;
     
     private static float SETTINGS_MENU_SCREEN_PERCENTAGE = .80f;
@@ -177,6 +178,7 @@ public class AppMenu
     }
     
     
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void startViewsAnimation(boolean display)
     {
         float targetX = display ? mGestureListener.getMaxSwipe() : 0;
@@ -239,6 +241,7 @@ public class AppMenu
     }
     
     
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setViewX(View view, float x)
     {
         if (!mIsBelowICS)
@@ -248,6 +251,7 @@ public class AppMenu
     }
     
     
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private float getViewX(View view)
     {
         float x = 0;
@@ -273,6 +277,7 @@ public class AppMenu
     }
     
     
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void hideMenu()
     {
         if (!mIsBelowICS)

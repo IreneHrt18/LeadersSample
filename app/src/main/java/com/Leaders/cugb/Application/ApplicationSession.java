@@ -27,7 +27,9 @@ import com.vuforia.Vuforia;
 import com.vuforia.Vuforia.UpdateCallbackInterface;
 import com.Leaders.cugb.AR.R;
 
-
+/**
+ * AR任务示例代码
+ */
 public class ApplicationSession implements UpdateCallbackInterface
 {
     

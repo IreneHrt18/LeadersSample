@@ -14,7 +14,9 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-
+/**
+ * AR活动菜单
+ */
 public class AppMenuView extends LinearLayout
 {
     

@@ -9,11 +9,13 @@ countries.
 
 package com.Leaders.cugb.Application;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.os.Build;
 import android.util.Log;
 
 import com.Leaders.cugb.Application.utils.SampleUtils;
@@ -38,6 +40,9 @@ import com.vuforia.VideoMode;
 import com.vuforia.ViewList;
 import com.Leaders.cugb.Application.utils.VideoBackgroundShader;
 
+/**
+ * AR渲染示例代码
+ */
 public class AppRenderer {
 
     private static final String LOGTAG = "AppRenderer";
@@ -364,6 +369,7 @@ public class AppRenderer {
 
 
     // Stores screen dimensions
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void storeScreenDimensions()
     {
         // Query display dimensions:
